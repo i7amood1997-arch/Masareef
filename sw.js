@@ -6,7 +6,7 @@
  *
  * iOS gives no Background Sync, so nothing here schedules work for later.
  */
-const CACHE = 'masareef-v2';
+const CACHE = 'masareef-v3';
 
 const CRITICAL = [
   './',
@@ -52,17 +52,21 @@ self.addEventListener('fetch', (e) => {
   const { request } = e;
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
 
-  // Cache-first: the app must be fully functional offline (§10). Freshness is
-  // handled by the re-cache on every launch, not by racing the network here.
+  // Network-first: while online, always fetch the latest deployed file and
+  // refresh the cache with it. Cache-first was tried initially and rejected —
+  // it meant a redeploy went unseen until this file's OWN bytes changed
+  // enough for the browser to notice a new service worker, which is easy to
+  // forget to bump and impossible for the person deploying to detect from
+  // outside. §10's offline requirement is unaffected: the cache fallback
+  // below still serves everything when there is no network at all.
   e.respondWith((async () => {
-    const cached = await caches.match(request);
-    if (cached) return cached;
     try {
       const res = await fetch(request);
       if (res.ok) (await caches.open(CACHE)).put(request, res.clone());
       return res;
     } catch {
-      return (await caches.match('./index.html')) ?? Response.error();
+      const cached = await caches.match(request);
+      return cached ?? (await caches.match('./index.html')) ?? Response.error();
     }
   })());
 });
