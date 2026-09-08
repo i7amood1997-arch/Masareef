@@ -1,0 +1,249 @@
+/* =========================================================================
+   Design tokens — §11.
+   Direction: modern, clean, clear, easy. The rejected "architectural ledger /
+   blueprint" concept is not revived anywhere in here.
+
+   Accent choice, stated: red and green are reserved as semantic colours
+   (deficit / surplus), so the accent cannot be either. A deep ink blue is what
+   is left, tuned dark and slightly desaturated so it survives Gulf daylight on
+   a phone held at arm's length — not a bright SaaS cyan.
+   ========================================================================= */
+
+:root {
+  color-scheme: light dark;
+
+  /* --- surfaces: white base, a second cooler neutral for bars and panels --- */
+  --surface: #ffffff;
+  --surface-sunken: #f2f4f7;
+  --surface-raised: #ffffff;
+  --hairline: #dde2ea;
+  --hairline-strong: #c3ccd9;
+
+  /* --- text --- */
+  --ink: #16202e;          /* a deliberate blue-cast dark, not a stand-in black */
+  --ink-muted: #55627a;
+  --ink-faint: #8a94a6;
+  --ink-on-accent: #ffffff;
+
+  /* --- the one accent: primary action, current selection, state only --- */
+  --accent: #1f4fa3;
+  --accent-hover: #1a4289;
+  --accent-active: #163872;
+  --accent-wash: #e8eefa;
+  --accent-ring: #1f4fa366;
+
+  /* --- semantics: never carried by colour alone (§11) --- */
+  --positive: #0f6b46;
+  --positive-wash: #e4f3ec;
+  --negative: #a3231f;
+  --negative-wash: #fbeae9;
+  --warning: #8a5a00;
+  --warning-wash: #fdf2dd;
+
+  --disabled-surface: #eceff4;
+  --disabled-ink: #6f7889;
+
+  /* --- type: one family, everywhere (§11) --- */
+  --font: 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fixed rem scale, ratio 1.125. Not fluid — a working interface should not
+     resize itself between contexts. Body floor 1rem = 16px so iOS never
+     auto-zooms an input. */
+  --text-xs: 0.79rem;
+  --text-sm: 0.889rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.266rem;
+  --text-xl: 1.424rem;
+  --text-2xl: 1.602rem;
+  --text-hero: 2.281rem;
+
+  --leading-tight: 1.2;
+  --leading: 1.5;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semi: 600;
+
+  /* --- spacing: 4/8 rhythm --- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Depth carries an offset and a soft blur — never a zero-offset halo. */
+  --shadow-raised: 0 1px 2px rgba(22, 32, 46, 0.06), 0 4px 12px rgba(22, 32, 46, 0.07);
+  --shadow-bar: 0 -1px 0 var(--hairline), 0 -8px 24px rgba(22, 32, 46, 0.05);
+
+  /* --- motion: 150–250ms, ease-out on entry, state only --- */
+  --dur-fast: 90ms;
+  --dur: 160ms;
+  --dur-slow: 240ms;
+  --ease-out: cubic-bezier(0.22, 0.9, 0.3, 1);
+
+  --tap-min: 44px;
+  --measure: 34rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* A genuine dark grey, not pure black (§11). */
+    --surface: #171b21;
+    --surface-sunken: #12161b;
+    --surface-raised: #1f242c;
+    --hairline: #2c333d;
+    --hairline-strong: #3d4652;
+
+    --ink: #e9edf3;
+    --ink-muted: #a3adbd;
+    --ink-faint: #7b8697;
+
+    --accent: #7ba6ee;
+    --accent-hover: #96b8f2;
+    --accent-active: #b0c9f6;
+    --accent-wash: #1c2941;
+    --accent-ring: #7ba6ee66;
+    --ink-on-accent: #0f1620;
+
+    --positive: #63c79b;
+    --positive-wash: #16302a;
+    --negative: #f28b86;
+    --negative-wash: #35201f;
+    --warning: #e0b055;
+    --warning-wash: #33290f;
+
+    --disabled-surface: #232932;
+    --disabled-ink: #828c9d;
+
+    --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-bar: 0 -1px 0 var(--hairline), 0 -8px 24px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  /* §10 — never 100vh on iOS; dvh tracks the collapsing URL bar correctly.
+     -webkit-fill-available is deliberately NOT used as a companion here: on a
+     block box whose parent is auto-height it resolves to zero and silently
+     collapses the layout. dvh alone is both correct and supported. */
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--surface-sunken);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: var(--leading);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  /* Latin numerals throughout (§2), and stop the OS substituting Arabic-Indic. */
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-semi);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--text-xl); }
+h2 { font-size: var(--text-md); }
+h3 { font-size: var(--text-base); }
+p { margin: 0; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Visible focus, always. Never removed. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* =========================================================================
+   Bidi — §2. Every numeric run is isolated so `50.000 BHD` cannot reverse
+   inside an Arabic sentence. One class, used everywhere an amount appears.
+   ========================================================================= */
+
+.amount {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+.amount .cur {
+  font-size: 0.62em;
+  font-weight: var(--weight-medium);
+  color: var(--ink-muted);
+  margin-inline-start: 0.28em;
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================================
+   Icons — real drawn geometry, one stroke weight. No emoji, ever (§11).
+   Directional icons mirror under RTL; non-directional ones do not (§2).
+   ========================================================================= */
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon--sm { width: 18px; height: 18px; stroke-width: 2; }
+[dir='rtl'] .icon[data-mirror='true'] { transform: scaleX(-1); }
+
+/* =========================================================================
+   Motion
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
