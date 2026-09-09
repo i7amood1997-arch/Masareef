@@ -390,7 +390,13 @@
 .hero__meta b { font-weight: var(--weight-semi); color: var(--ink); }
 .hero__meta .amount .cur { display: none; } /* the hero already says BHD once */
 .section__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
-.linkbtn { border: 0; background: none; padding: var(--s-1) 0; min-height: var(--tap-min); color: var(--accent); font-size: var(--text-sm); font-weight: var(--weight-medium); cursor: pointer; }
+.linkbtn {
+  border: 0; background: none; cursor: pointer;
+  /* §12 — 44px is the floor. A visually small link still needs a full-size
+     hit area, so the padding is inline rather than a shrunken min-height. */
+  min-height: var(--tap-min); padding: var(--s-3) var(--s-2);
+  color: var(--accent); font-size: var(--text-sm); font-weight: var(--weight-medium);
+}
 .linkbtn:hover { text-decoration: underline; }
 
 /* --- sections ----------------------------------------------------------- */
@@ -487,7 +493,7 @@
 .notice--warning .notice__body, .notice--error .notice__body, .notice--action .notice__body { color: var(--ink); }
 .notice .icon { flex: none; margin-top: 2px; }
 
-.btn--inline { width: auto; min-height: 40px; padding: var(--s-2) var(--s-4); font-size: var(--text-sm); }
+.btn--inline { width: auto; min-height: var(--tap-min); padding: var(--s-2) var(--s-4); font-size: var(--text-sm); }
 
 /* --- action bar with a secondary action --------------------------------- */
 
@@ -583,7 +589,7 @@
 }
 .backupline .icon { color: var(--positive); }
 .backupline__text { flex: 1; }
-.backupline .linkbtn { min-height: 32px; }
+.backupline .linkbtn { min-height: var(--tap-min); padding-block: var(--s-2); }
 .backupline--stale { color: var(--warning); }
 .backupline--stale .icon { color: var(--warning); }
 .backupline--stale .backupline__text { font-weight: var(--weight-medium); }
@@ -674,7 +680,7 @@
   flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
 }
 .itemcard__pickers .segmented::-webkit-scrollbar { display: none; }
-.itemcard__pickers .segmented__item { flex: none; min-height: 40px; }
+.itemcard__pickers .segmented__item { flex: none; min-height: var(--tap-min); }
 
 /* =========================================================================
    Safe-to-Spend — the number the app exists to answer
