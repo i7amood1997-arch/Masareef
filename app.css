@@ -675,3 +675,51 @@
 }
 .itemcard__pickers .segmented::-webkit-scrollbar { display: none; }
 .itemcard__pickers .segmented__item { flex: none; min-height: 40px; }
+
+/* =========================================================================
+   Safe-to-Spend — the number the app exists to answer
+   ========================================================================= */
+
+.safespend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-4);
+  margin-top: calc(-1 * var(--s-2));
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
+  background: var(--accent-wash);
+}
+/* Over-committed is a warning, not an error: nothing is broken, the plan is
+   just fully allocated. Amber, not red. */
+.safespend--over { border-color: var(--warning); background: var(--warning-wash); }
+
+.safespend__head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.safespend__label { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--ink-muted); }
+
+.safespend__toggle {
+  display: inline-flex; align-items: center; gap: var(--s-1);
+  min-height: var(--tap-min); padding: 0 var(--s-1);
+  border: 0; background: none; cursor: pointer;
+  color: var(--accent); font-size: var(--text-sm); font-weight: var(--weight-medium);
+}
+.safespend--over .safespend__toggle { color: var(--warning); }
+.safespend__toggle .icon { transition: transform var(--dur) var(--ease-out); }
+.safespend__toggle[aria-expanded='true'] .icon { transform: rotate(180deg); }
+
+/* One size step below the المتبقي hero: a supplement, never a replacement. */
+.safespend__value {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semi);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.safespend__value .amount .cur { font-size: 0.55em; }
+
+.safespend__days { font-size: var(--text-sm); color: var(--ink-muted); }
+.safespend__days b { font-weight: var(--weight-semi); color: var(--ink); }
+.safespend__days--warn { color: var(--warning); font-weight: var(--weight-medium); }
+
+.safespend__detail { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-2); }
+.safespend__detail .row { background: var(--surface); }
+.row--total { border-color: var(--hairline-strong); font-weight: var(--weight-semi); }
