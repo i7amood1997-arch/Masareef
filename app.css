@@ -589,3 +589,89 @@
 .backupline--stale .backupline__text { font-weight: var(--weight-medium); }
 .btn--danger { border-color: var(--negative); color: var(--negative); }
 .btn--danger:hover:not(:disabled) { background: var(--negative-wash); }
+
+/* Restore picker — an armed row is one tap from replacing everything, so it
+   reads as destructive rather than as another list item. */
+.row--armed { border-color: var(--negative); box-shadow: inset 0 0 0 1px var(--negative); }
+.row--armed .row__amount { color: var(--negative); font-weight: var(--weight-semi); }
+.row--armed .row__icon { color: var(--negative); background: var(--negative-wash); }
+
+/* =========================================================================
+   Reports, advice, category editor
+   ========================================================================= */
+
+/* Month picker — a horizontal strip so a year of cycles stays one tap away. */
+.monthpicker {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: var(--s-1);
+  margin-inline: calc(-1 * var(--s-4));
+  padding-inline: var(--s-4);
+  scroll-snap-type: x proximity;
+}
+.monthpicker::-webkit-scrollbar { display: none; }
+.monthpicker .segmented__item { flex: none; scroll-snap-align: center; }
+
+.is-positive { color: var(--positive); }
+.is-negative { color: var(--negative); }
+
+.row--report { align-items: flex-start; }
+.row--report .row__body { gap: var(--s-1); }
+.row__share { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-regular); }
+.row__amount { flex-direction: column; align-items: flex-end; gap: 0; }
+
+/* Relative size at a glance; the number beside it carries the accuracy (§7). */
+.bar { display: block; height: 4px; border-radius: 2px; background: var(--hairline); overflow: hidden; margin-top: var(--s-1); }
+.bar__fill { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+
+.row--advice { align-items: flex-start; }
+.row--advice .row__icon { background: var(--accent-wash); color: var(--accent); font-weight: var(--weight-semi); }
+.advice__summary { font-size: var(--text-md); line-height: var(--leading); }
+.advice__body { color: var(--ink-muted); font-size: var(--text-sm); line-height: var(--leading); margin: var(--s-1) 0; }
+
+.budgetcat--archived { opacity: 0.6; }
+.budgetcat__actions { display: flex; gap: var(--s-1); }
+.segmented__item--editable { border-style: dashed; }
+.segmented__item--add { border-style: dashed; color: var(--accent); border-color: var(--accent); }
+
+/* Icon picker — square tiles, icon only, so the glyph is what you compare. */
+.choices--icons { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); }
+.choice--icon { min-height: 56px; padding: var(--s-2); }
+
+/* =========================================================================
+   §1 — multi-item capture review
+   ========================================================================= */
+
+.itemcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+/* An uncertain item is marked, not hidden — the whole point of the review. */
+.itemcard--flagged { border-color: var(--warning); background: var(--warning-wash); }
+.itemcard--flagged .textfield { background: var(--surface); }
+
+.itemcard__head { display: flex; align-items: center; gap: var(--s-2); }
+.itemcard__head .textfield { flex: 1; min-width: 0; }
+.itemcard__amount {
+  display: flex; align-items: baseline; gap: var(--s-1);
+  direction: ltr; flex: 0 0 auto;
+}
+.itemcard__amount .textfield--amount {
+  width: 8.5ch; text-align: right; padding-inline: var(--s-2);
+  font-variant-numeric: tabular-nums lining-nums; font-weight: var(--weight-semi);
+}
+.itemcard__amount .cur { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-medium); }
+
+/* Pickers stay scrollable so a long category list never stretches the card. */
+.itemcard__pickers { display: flex; flex-direction: column; gap: var(--s-2); }
+.itemcard__pickers .segmented {
+  flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+}
+.itemcard__pickers .segmented::-webkit-scrollbar { display: none; }
+.itemcard__pickers .segmented__item { flex: none; min-height: 40px; }
