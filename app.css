@@ -787,3 +787,14 @@
   user-select: all;
   -webkit-user-select: all;
 }
+
+/* A 6-digit code: wide tracking and tabular figures so digits are countable
+   at a glance, and large enough to check against the email without squinting. */
+.textfield--code {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semi);
+  letter-spacing: 0.4em;
+  text-align: center;
+  font-variant-numeric: tabular-nums lining-nums;
+  padding-inline: var(--s-3);
+}
