@@ -798,3 +798,6 @@
   font-variant-numeric: tabular-nums lining-nums;
   padding-inline: var(--s-3);
 }
+
+/* Quiet enough to ignore, present enough to check. */
+.buildstamp { opacity: 0.5; font-size: var(--text-xs); font-family: ui-monospace, monospace; }
