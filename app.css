@@ -500,6 +500,10 @@
 .actionbar--split { display: flex; gap: var(--s-2); }
 .actionbar--split .btn--quiet { flex: 0 0 auto; width: auto; padding-inline: var(--s-4); }
 .actionbar--split .btn--primary { flex: 1; }
+/* A wrapped primary label lets the secondary action look dominant — keep the
+   primary on one line and let the SECONDARY give up width instead. */
+.actionbar--split .btn { white-space: nowrap; }
+.actionbar--split .btn--quiet { min-width: 0; }
 
 /* --- inline form (new vault) ------------------------------------------- */
 
