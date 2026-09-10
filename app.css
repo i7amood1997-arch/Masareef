@@ -729,3 +729,41 @@
 .safespend__detail { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-2); }
 .safespend__detail .row { background: var(--surface); }
 .row--total { border-color: var(--hairline-strong); font-weight: var(--weight-semi); }
+
+/* =========================================================================
+   Rev 4 — Top Movers (reports) and Burn Rate (home)
+   ========================================================================= */
+
+/* Spending MORE is the bad direction — an increase is negative, a decrease
+   positive. Inverse of the usual instinct, same as the budget rows. */
+.mover__delta { display: flex; align-items: center; gap: var(--s-1); flex-wrap: wrap; font-size: var(--text-sm); }
+.mover__delta span { color: var(--ink-muted); }
+.mover__delta b { font-weight: var(--weight-semi); }
+.mover__delta--up { color: var(--negative); }
+.mover__delta--down { color: var(--positive); }
+.mover__delta .icon { flex: none; }
+
+.burnrate {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  padding: var(--s-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.burnrate--warning { border-color: var(--warning); background: var(--warning-wash); }
+.burnrate--negative { border-color: var(--negative); background: var(--negative-wash); }
+
+.burnrate__head { display: flex; align-items: center; gap: var(--s-3); }
+.burnrate__figures { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.burnrate__value {
+  display: flex; align-items: baseline; gap: var(--s-1);
+  font-size: var(--text-xl); font-weight: var(--weight-semi); letter-spacing: -0.02em;
+}
+.burnrate__value .amount .cur { font-size: 0.55em; }
+.burnrate__per { font-size: var(--text-sm); color: var(--ink-muted); font-weight: var(--weight-regular); }
+
+.burnrate__msg { display: flex; align-items: flex-start; gap: var(--s-2); font-size: var(--text-sm); line-height: var(--leading); }
+.burnrate__msg .icon { flex: none; margin-top: 2px; }
+.burnrate--positive .burnrate__msg { color: var(--positive); }
+.burnrate--warning .burnrate__msg { color: var(--warning); }
+.burnrate--negative .burnrate__msg { color: var(--negative); }
