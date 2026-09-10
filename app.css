@@ -767,3 +767,19 @@
 .burnrate--positive .burnrate__msg { color: var(--positive); }
 .burnrate--warning .burnrate__msg { color: var(--warning); }
 .burnrate--negative .burnrate__msg { color: var(--negative); }
+
+/* A URL the person must copy exactly — selectable, wrapping, unmistakably
+   verbatim rather than prose. */
+.copyable {
+  display: block;
+  margin-block: var(--s-1);
+  padding: var(--s-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--text-xs);
+  word-break: break-all;
+  user-select: all;
+  -webkit-user-select: all;
+}
