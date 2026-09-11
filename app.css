@@ -11,7 +11,8 @@
   min-height: 100dvh;
   max-width: var(--measure);
   margin-inline: auto;
-  background: var(--surface);
+  /* The shell is the GROUND, not a surface — panels sit on it. */
+  background: var(--ground);
 }
 
 /* --- top bar --------------------------------------------------------- */
@@ -22,13 +23,18 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: var(--s-2);
-  min-height: 56px;
-  padding: var(--s-2) var(--s-4);
+  gap: var(--s-1);
+  min-height: 52px;
+  padding: var(--s-2) var(--s-3);
   padding-top: calc(var(--s-2) + env(safe-area-inset-top));
-  background: var(--surface);
-  border-bottom: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--ground) 86%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease);
 }
+/* The rule appears only once content has moved under the bar. */
+.topbar[data-scrolled='true'] { border-bottom-color: var(--hairline); }
 .topbar h1 { flex: 1; font-size: var(--text-md); }
 
 .iconbtn {
@@ -53,10 +59,10 @@
 
 .screen {
   flex: 1;
-  padding: var(--s-5) var(--s-4) var(--s-8);
+  padding: var(--s-4) var(--s-4) var(--s-12);
   display: flex;
   flex-direction: column;
-  gap: var(--s-6);
+  gap: var(--s-5);
 }
 
 .actionbar {
@@ -64,7 +70,9 @@
   bottom: 0;
   padding: var(--s-3) var(--s-4);
   padding-bottom: calc(var(--s-3) + env(safe-area-inset-bottom));
-  background: var(--surface);
+  background: color-mix(in srgb, var(--ground) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
   box-shadow: var(--shadow-bar);
 }
 
@@ -77,12 +85,13 @@
   justify-content: center;
   gap: var(--s-2);
   width: 100%;
-  min-height: var(--tap-min);
+  min-height: 48px;
   padding: var(--s-3) var(--s-5);
   border: 1px solid transparent;
   border-radius: var(--radius);
   font-size: var(--text-base);
   font-weight: var(--weight-semi);
+  letter-spacing: var(--track-display);
   cursor: pointer;
   /* Press feedback is colour, never a transform — a shifting layout under the
      thumb reads as a mis-tap (§11). */
@@ -90,7 +99,7 @@
               border-color var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out);
 }
-.btn--primary { background: var(--accent); color: var(--ink-on-accent); }
+.btn--primary { background: var(--accent); color: var(--ink-on-accent); box-shadow: var(--shadow-sm); }
 .btn--primary:hover:not(:disabled) { background: var(--accent-hover); }
 .btn--primary:active:not(:disabled) { background: var(--accent-active); }
 
@@ -357,10 +366,12 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   display: flex;
   align-items: flex-start;
   gap: var(--s-3);
-  padding: var(--s-3) var(--s-4);
+  padding: var(--s-4);
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
+  background: var(--surface);
   font-size: var(--text-sm);
+  line-height: var(--leading);
 }
 .notice--warning { background: var(--warning-wash); border-color: transparent; color: var(--warning); }
 .notice--error   { background: var(--negative-wash); border-color: transparent; color: var(--negative); }
@@ -447,7 +458,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   align-items: center;
   gap: var(--s-3);
   width: 100%;
-  min-height: 60px;
+  min-height: 58px;
   padding: var(--s-3) var(--s-4);
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
@@ -470,7 +481,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .row__icon {
   display: grid;
   place-items: center;
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   flex: none;
   border-radius: var(--radius-sm);
   background: var(--surface-sunken);
@@ -856,3 +867,211 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
    see the whole month's commitments, just not be asked about them again. */
 .row--done { opacity: 0.62; }
 .row--done .row__title { text-decoration: line-through; text-decoration-thickness: 1px; }
+
+
+/* =========================================================================
+   REDESIGN — ranked zones
+   The old screen stacked twelve sections at equal weight. These styles exist
+   to make rank visible: one figure panel that owns the first screen, a
+   decisions zone that disappears when empty, and reference collapsed into
+   drawers.
+   ========================================================================= */
+
+/* --- ZONE 1 · the figure panel ---------------------------------------- */
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.figure__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+.figure__meta b { font-weight: var(--weight-semi); color: var(--ink); }
+.figure__dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--ink-faint); flex: none;
+}
+
+/* The fact. Largest thing on the screen, and the only thing at this size. */
+.figure__balance {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--track-figure);
+  line-height: 1.05;
+}
+.figure__balance .amount .cur { font-size: 0.32em; }
+
+.figure__flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+.figure__flow .amount { color: var(--ink); font-weight: var(--weight-medium); }
+.figure__flow .amount .cur { display: none; }
+
+/* The answer. A tinted shelf inside the same panel — deliberately not a
+   separate card, because these two figures are one thought. */
+.figure__allow {
+  margin-top: var(--s-3);
+  padding: var(--s-4);
+  border-radius: var(--radius);
+  background: var(--accent-wash);
+}
+.figure__allow.is-over { background: var(--warning-wash); }
+
+.figure__allowhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+}
+.figure__allowlabel {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--ink-muted);
+}
+.figure__why {
+  display: inline-flex; align-items: center; gap: var(--s-1);
+  min-height: var(--tap-min); padding: 0 var(--s-1);
+  border: 0; background: none; cursor: pointer;
+  color: var(--accent); font-size: var(--text-sm); font-weight: var(--weight-medium);
+}
+.figure__why .icon { transition: transform var(--dur) var(--ease); }
+.figure__why[aria-expanded='true'] .icon { transform: rotate(180deg); }
+
+.figure__allowvalue {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--track-figure);
+  line-height: 1.2;
+}
+.figure__allowvalue .amount .cur { font-size: 0.45em; }
+
+.figure__pace {
+  display: flex; align-items: flex-start; gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--text-sm);
+  line-height: var(--leading);
+  color: var(--ink-muted);
+}
+.figure__pace .icon { flex: none; margin-top: 3px; }
+.figure__pace.is-positive { color: var(--positive); }
+.figure__pace.is-warning { color: var(--warning); }
+.figure__pace.is-negative { color: var(--negative); }
+
+/* --- zones -------------------------------------------------------------- */
+
+.zone { display: flex; flex-direction: column; gap: var(--s-3); }
+.zone__head {
+  display: flex; align-items: center; gap: var(--s-2);
+  /* More space above a heading than below it. */
+  margin-top: var(--s-2);
+}
+.zone__head h2 { flex: 1; font-size: var(--text-sm); color: var(--ink-muted); font-weight: var(--weight-semi); }
+.zone__count {
+  min-width: 20px; height: 20px; padding: 0 6px;
+  display: grid; place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--ink-on-accent);
+  font-size: var(--text-xs); font-weight: var(--weight-semi);
+}
+.zone__body { display: flex; flex-direction: column; gap: var(--s-2); }
+
+/* --- ZONE 3 · drawers --------------------------------------------------- */
+
+.drawers {
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.drawerwrap + .drawerwrap,
+.drawerwrap + .drawer,
+.drawer + .drawerwrap { border-top: 1px solid var(--hairline); }
+
+.drawer {
+  display: flex; align-items: center; gap: var(--s-3);
+  width: 100%; min-height: 56px;
+  padding: var(--s-3) var(--s-4);
+  border: 0; background: none; color: var(--ink);
+  text-align: start; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+.drawer:hover { background: var(--surface-sunken); }
+.drawer:active { background: var(--hairline); }
+.drawer__icon { display: grid; place-items: center; color: var(--ink-muted); flex: none; }
+.drawer__title { font-weight: var(--weight-medium); flex: none; }
+.drawer__note {
+  flex: 1; min-width: 0;
+  font-size: var(--text-sm); color: var(--ink-faint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.drawer__figure { font-weight: var(--weight-semi); font-size: var(--text-sm); flex: none; }
+.drawer__figure .amount .cur { display: none; }
+.drawer > .icon:last-child { color: var(--ink-faint); transition: transform var(--dur) var(--ease); }
+.drawer[aria-expanded='true'] > .icon:last-child { transform: rotate(180deg); }
+.drawer--empty .drawer__title { color: var(--accent); }
+
+.drawer__body {
+  padding: 0 var(--s-4) var(--s-4);
+  border-top: 1px solid var(--hairline);
+}
+/* A drawer's contents are already inside a container — strip the section
+   chrome they carry for the standalone case, so nothing nests. */
+.drawer__body .section { gap: var(--s-2); }
+.drawer__body .section__head h2,
+.drawer__body .section > h2 { display: none; }
+
+/* --- reveal ------------------------------------------------------------- */
+
+.reveal { animation: reveal var(--dur-slow) var(--ease) both; }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* --- grouped list ------------------------------------------------------
+   The ledger is one surface with separators. Card-per-row is the category
+   default and stops being readable past a handful of entries. */
+.list--grouped {
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.list--grouped > li + li { border-top: 1px solid var(--hairline); }
+.list--grouped .row {
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.list--grouped .row--tappable:hover:not(:disabled) { background: var(--surface-sunken); }
+
+.daygroup { display: flex; flex-direction: column; gap: var(--s-2); }
+.daygroup + .daygroup { margin-top: var(--s-4); }
+.daygroup__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--ink-faint);
+  padding-inline-start: var(--s-1);
+}
+
+/* An empty drawer row still needs its note column to hold the layout. */
+.drawer--empty { justify-content: flex-start; }
+.drawer--empty .drawer__title { flex: 1; }
