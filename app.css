@@ -203,6 +203,15 @@
 .textfield:disabled { background: var(--disabled-surface); color: var(--disabled-ink); cursor: not-allowed; }
 .textfield[aria-invalid='true'] { border-color: var(--negative); }
 
+/* A date input must stay dir=ltr or the day/month/year segments reorder — but
+   left-aligned inside an RTL screen the value drifts away from where the eye
+   starts reading. Right-aligning keeps it on the reading edge, beside the
+   picker icon, without touching segment order. */
+input[type='date'].textfield {
+  direction: ltr;
+  text-align: right;
+}
+
 /* --- choice grid (categories) ---------------------------------------- */
 
 .choices {
@@ -500,6 +509,18 @@
 .actionbar--split { display: flex; gap: var(--s-2); }
 .actionbar--split .btn--quiet { flex: 0 0 auto; width: auto; padding-inline: var(--s-4); }
 .actionbar--split .btn--primary { flex: 1; }
+/* This rule has to come AFTER .btn--quiet above: that one sets `width: auto`,
+   which was collapsing icon-only buttons to ~26px — well under the 44px
+   minimum and visibly cramped next to a 256px primary. */
+.actionbar--split .btn--icon {
+  flex: 0 0 var(--tap-min);
+  width: var(--tap-min);
+  min-width: var(--tap-min);
+  padding-inline: 0;
+}
+/* The primary keeps its label but stops hogging the bar; the icons need room
+   to read as separate targets rather than one grey block. */
+.actionbar--split .btn--primary { flex: 1 1 auto; min-width: 0; }
 /* A wrapped primary label lets the secondary action look dominant — keep the
    primary on one line and let the SECONDARY give up width instead. */
 .actionbar--split .btn { white-space: nowrap; }
@@ -808,3 +829,8 @@
 .vaultform__row .textfield--amount { flex: 1; text-align: right; font-variant-numeric: tabular-nums lining-nums; font-weight: var(--weight-semi); }
 .vaultform__row .cur { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-medium); }
 .vaultform .inline-form .btn { flex: 1; }
+
+/* A settled fixed expense recedes rather than disappearing — you still want to
+   see the whole month's commitments, just not be asked about them again. */
+.row--done { opacity: 0.62; }
+.row--done .row__title { text-decoration: line-through; text-decoration-thickness: 1px; }
