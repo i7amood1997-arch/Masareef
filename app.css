@@ -51,7 +51,7 @@
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.iconbtn:hover { background: var(--surface-sunken); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .iconbtn:hover { background: var(--surface-sunken); color: var(--ink); } }
 .iconbtn:active { background: var(--hairline); }
 .iconbtn:disabled { color: var(--disabled-ink); cursor: not-allowed; background: transparent; }
 
@@ -100,7 +100,7 @@
               color var(--dur-fast) var(--ease-out);
 }
 .btn--primary { background: var(--accent); color: var(--ink-on-accent); box-shadow: var(--shadow-sm); }
-.btn--primary:hover:not(:disabled) { background: var(--accent-hover); }
+@media (hover: hover) and (pointer: fine) { .btn--primary:hover:not(:disabled) { background: var(--accent-hover); } }
 .btn--primary:active:not(:disabled) { background: var(--accent-active); }
 
 .btn--quiet {
@@ -109,7 +109,7 @@
   color: var(--ink);
   font-weight: var(--weight-medium);
 }
-.btn--quiet:hover:not(:disabled) { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .btn--quiet:hover:not(:disabled) { background: var(--surface-sunken); } }
 .btn--quiet:active:not(:disabled) { background: var(--hairline); }
 
 .btn:disabled {
@@ -207,7 +207,7 @@
   font-size: var(--text-base);
   transition: border-color var(--dur-fast) var(--ease-out);
 }
-.textfield:hover:not(:disabled) { border-color: var(--ink-faint); }
+@media (hover: hover) and (pointer: fine) { .textfield:hover:not(:disabled) { border-color: var(--ink-faint); } }
 .textfield:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-ring); }
 .textfield:disabled { background: var(--disabled-surface); color: var(--disabled-ink); cursor: not-allowed; }
 .textfield[aria-invalid='true'] { border-color: var(--negative); }
@@ -273,9 +273,10 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
               color var(--dur-fast) var(--ease-out);
 }
 .choice .icon { color: var(--ink-muted); transition: color var(--dur-fast) var(--ease-out); }
-.choice:hover:not(:disabled) { background: var(--surface-sunken); border-color: var(--hairline-strong); }
+@media (hover: hover) and (pointer: fine) { .choice:hover:not(:disabled) { background: var(--surface-sunken); border-color: var(--hairline-strong); } }
 .choice:active:not(:disabled) { background: var(--hairline); }
-.choice[aria-pressed='true'] {
+.choice[aria-pressed='true'],
+.choice[aria-pressed='true']:hover {
   background: var(--accent-wash);
   border-color: var(--accent);
   color: var(--accent);
@@ -309,12 +310,14 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
               border-color var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out);
 }
-.segmented__item:hover:not(:disabled) { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .segmented__item:hover:not(:disabled) { background: var(--surface-sunken); } }
 .segmented__item:active:not(:disabled) { background: var(--hairline); }
-.segmented__item[aria-pressed='true'] {
+.segmented__item[aria-pressed='true'],
+.segmented__item[aria-pressed='true']:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--ink-on-accent);
+  font-weight: var(--weight-semi);
 }
 .segmented__item:disabled { background: var(--disabled-surface); color: var(--disabled-ink); cursor: not-allowed; }
 
@@ -439,7 +442,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   min-height: var(--tap-min); padding: var(--s-3) var(--s-2);
   color: var(--accent); font-size: var(--text-sm); font-weight: var(--weight-medium);
 }
-.linkbtn:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .linkbtn:hover { text-decoration: underline; } }
 
 /* --- sections ----------------------------------------------------------- */
 
@@ -468,10 +471,11 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 }
 .row--compact { min-height: var(--tap-min); padding-block: var(--s-2); }
 .row--tappable { cursor: pointer; transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
-.row--tappable:hover:not(:disabled) { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .row--tappable:hover:not(:disabled) { background: var(--surface-sunken); } }
 .row--tappable:active:not(:disabled) { background: var(--hairline); }
 .row--tappable:disabled { cursor: default; }
-.row--tappable[aria-pressed='true'] {
+.row--tappable[aria-pressed='true'],
+.row--tappable[aria-pressed='true']:hover {
   background: var(--accent-wash);
   border-color: var(--accent);
   box-shadow: inset 0 0 0 1px var(--accent);
@@ -588,7 +592,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 
 /* --- danger icon button ------------------------------------------------- */
 
-.iconbtn--danger:hover { color: var(--negative); background: var(--negative-wash); }
+@media (hover: hover) and (pointer: fine) { .iconbtn--danger:hover { color: var(--negative); background: var(--negative-wash); } }
 .iconbtn--danger[data-armed='true'] { color: var(--ink-on-accent); background: var(--negative); }
 
 
@@ -623,7 +627,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .micbtn .icon { width: 36px; height: 36px; }
-.micbtn:hover { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .micbtn:hover { background: var(--surface-sunken); } }
 .micbtn:active { background: var(--hairline); }
 .micbtn[aria-pressed='true'] {
   background: var(--negative);
@@ -652,7 +656,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .backupline--stale .icon { color: var(--warning); }
 .backupline--stale .backupline__text { font-weight: var(--weight-medium); }
 .btn--danger { border-color: var(--negative); color: var(--negative); }
-.btn--danger:hover:not(:disabled) { background: var(--negative-wash); }
+@media (hover: hover) and (pointer: fine) { .btn--danger:hover:not(:disabled) { background: var(--negative-wash); } }
 
 /* Restore picker — an armed row is one tap from replacing everything, so it
    reads as destructive rather than as another list item. */
@@ -1011,7 +1015,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   text-align: start; cursor: pointer;
   transition: background var(--dur-fast) var(--ease);
 }
-.drawer:hover { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .drawer:hover { background: var(--surface-sunken); } }
 .drawer:active { background: var(--hairline); }
 .drawer__icon { display: grid; place-items: center; color: var(--ink-muted); flex: none; }
 .drawer__title { font-weight: var(--weight-medium); flex: none; }
@@ -1061,7 +1065,7 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   border-radius: 0;
   background: none;
 }
-.list--grouped .row--tappable:hover:not(:disabled) { background: var(--surface-sunken); }
+@media (hover: hover) and (pointer: fine) { .list--grouped .row--tappable:hover:not(:disabled) { background: var(--surface-sunken); } }
 
 .daygroup { display: flex; flex-direction: column; gap: var(--s-2); }
 .daygroup + .daygroup { margin-top: var(--s-4); }

@@ -39,6 +39,16 @@
     finish review, the verdict, and DESIGN.md
 -->
 <div id="root"></div>
+<script>
+  // Synchronous, before first paint: reading the choice from IndexedDB is
+  // async and would flash the wrong theme, so the last choice is mirrored to
+  // localStorage purely as a paint-time hint. IndexedDB stays the source of
+  // truth and corrects this a moment later if they ever disagree.
+  try {
+    var t = localStorage.getItem('masareef-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* private mode; fall through to the system theme */ }
+</script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
