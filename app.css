@@ -210,6 +210,28 @@
 input[type='date'].textfield {
   direction: ltr;
   text-align: right;
+  /* Stop iOS rendering this as a narrow intrinsic-width control that leaves
+     the value stranded mid-field. */
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: var(--tap-min);
+}
+
+/* WebKit draws the date VALUE inside its own shadow element, which ignores
+   text-align on the input itself — which is why the first attempt at this
+   looked fixed in Chrome and stayed broken on iOS. These are the parts that
+   actually control it. */
+input[type='date'].textfield::-webkit-date-and-time-value {
+  text-align: right;
+  margin: 0;
+}
+input[type='date'].textfield::-webkit-datetime-edit {
+  /* Push the value across to the reading edge; the picker icon keeps the left. */
+  width: 100%;
+  text-align: right;
+}
+input[type='date'].textfield::-webkit-calendar-picker-indicator {
+  margin-inline-start: 0;
 }
 
 /* --- choice grid (categories) ---------------------------------------- */
