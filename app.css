@@ -1079,3 +1079,17 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 /* An empty drawer row still needs its note column to hold the layout. */
 .drawer--empty { justify-content: flex-start; }
 .drawer--empty .drawer__title { flex: 1; }
+
+/* Review row: the tappable body and a separate confirm button, so accepting a
+   suggestion never means opening the editor first. */
+.row--review { padding: 0; gap: 0; align-items: stretch; }
+.row--review .row__main {
+  display: flex; align-items: center; gap: var(--s-3);
+  flex: 1; min-width: 0;
+  padding: var(--s-3) var(--s-4);
+  border: 0; background: none; color: inherit; text-align: start; cursor: pointer;
+}
+.row--review .row__main:disabled { cursor: default; opacity: 0.6; }
+.row--review .btn--inline { flex: 0 0 auto; align-self: center; margin-inline-end: var(--s-3); }
+/* Marked as a proposal, not a fact. */
+.row__suggest { color: var(--accent); font-weight: var(--weight-medium); }
