@@ -1099,3 +1099,15 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
    Plex's H/D sidebearings read as "BH D" — and it adds nothing: every figure
    in the app is BHD. The figure panel already drops it the same way. */
 .field__hint .amount .cur { display: none; }
+
+/* The brand mark on the sign-in screen: the app icon's own tile, so the first
+   thing seen after install matches the icon that was just tapped. */
+.signin__brand {
+  display: grid; place-items: center;
+  width: 84px; height: 84px; margin-inline: auto;
+  border-radius: 22.37%;                /* the iOS icon superellipse, approximated */
+  background: var(--accent);
+  color: var(--ink-on-accent);
+  box-shadow: var(--shadow);
+}
+.brandmark { display: block; width: auto; }
