@@ -1,27 +1,29 @@
 مصاريف — ملفات الرفع
-Build 202609231212 — 23 September 2026
+Build 202609281242 — 28 September 2026
 
-Upload BOTH of these to GitHub, into the public/ folder of the Masareef repo,
-replacing the files already there:
+This build = the expected-expenses feature and the new logo, rebuilt on top of
+all the fixes from 22-23 September. It replaces "masareef-public 20".
 
-  app.js    (the app itself — changed today)
-  app.css   (unchanged since yesterday; included so this folder is complete)
+WHAT TO UPLOAD to the public/ folder of the Masareef repo on GitHub
+(replace anything with the same name):
 
-Nothing else changed. sw.js, index.html, manifest.json and the fonts stay
-exactly as they are.
+  app.js          changed
+  app.css         changed
+  index.html      same as the one you uploaded yesterday
+  manifest.json   same as the one you uploaded yesterday
+  icons/          the whole folder, all 10 files (same as yesterday's)
 
-After uploading, open the app and check the sign-in screen or Settings says
-  build 202609231212
-If it still shows an older number, the deploy has not gone live yet.
+Do NOT touch: sw.js, tokens.css, fonts.css, fonts/
 
-What this build fixes (no new features — a stability pass)
-- Amounts typed on an Arabic number keypad (١٢٫٥٠٠) were saved 1000x too
-  large (12,500 instead of 12.500). Fixed on every amount field. The salary
-  field on the very first screen rejected Arabic digits entirely — fixed too.
-- "Edit savings balance" left empty no longer resets the account to zero.
-- The CSV and report exports showed the previous day for anything bought
-  between midnight and 3am. Fixed.
-- A bank SMS handed to the app is no longer thrown away when no API key is
-  saved on the device. It is read and put in the review list.
-- Day counts now read correctly in Arabic: "30 يوم", "يومين", "5 أيام"
-  (it used to say "30 أيام").
+Strictly only app.js and app.css differ from what is live now, but uploading
+all of the above is safe and makes sure nothing is missed.
+
+After uploading, open the app and check Settings says
+  build 202609281242
+
+Your data is safe: this build opens the same database the live version
+created, and keeps any expected expenses you already entered.
+
+IMPORTANT for the future: never upload an older build over this one.
+The database moved to a newer format, and an older build would not be
+able to open it.

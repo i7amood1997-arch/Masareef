@@ -664,6 +664,27 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .row--armed .row__amount { color: var(--negative); font-weight: var(--weight-semi); }
 .row--armed .row__icon { color: var(--negative); background: var(--negative-wash); }
 
+/* Inside running hint sentences the currency label is dropped. At 0.6em of
+   the hint size it renders around 8px — below comfortable legibility, where
+   Plex's H/D sidebearings read as "BH D" — and it adds nothing: every figure
+   in the app is BHD. The figure panel already drops it the same way. */
+.field__hint .amount .cur { display: none; }
+
+/* The brand mark on the sign-in screen: the app icon's own tile, so the first
+   thing seen after install matches the icon that was just tapped. */
+.signin__brand {
+  display: grid; place-items: center;
+  width: 84px; height: 84px; margin-inline: auto;
+  border-radius: 22.37%;                /* the iOS icon superellipse, approximated */
+  background: var(--accent);
+  color: var(--ink-on-accent);
+  box-shadow: var(--shadow);
+}
+.brandmark { display: block; width: auto; }
+/* The armed detail line states what is about to be destroyed — colour
+   reinforces the words, it never carries the meaning alone (§11). */
+.row--armed .row__details { color: var(--negative); }
+
 /* =========================================================================
    Reports, advice, category editor
    ========================================================================= */
@@ -1075,6 +1096,21 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
   color: var(--ink-faint);
   padding-inline-start: var(--s-1);
 }
+/* The day and its total share one line: the day is context, the figure is the
+   thing being looked for, so the figure is the brighter of the two. */
+.daygroup__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding-inline-end: var(--s-1);
+}
+.daygroup__total {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
 
 /* An empty drawer row still needs its note column to hold the layout. */
 .drawer--empty { justify-content: flex-start; }
@@ -1093,21 +1129,3 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .row--review .btn--inline { flex: 0 0 auto; align-self: center; margin-inline-end: var(--s-3); }
 /* Marked as a proposal, not a fact. */
 .row__suggest { color: var(--accent); font-weight: var(--weight-medium); }
-
-/* Inside running hint sentences the currency label is dropped. At 0.6em of
-   the hint size it renders around 8px — below comfortable legibility, where
-   Plex's H/D sidebearings read as "BH D" — and it adds nothing: every figure
-   in the app is BHD. The figure panel already drops it the same way. */
-.field__hint .amount .cur { display: none; }
-
-/* The brand mark on the sign-in screen: the app icon's own tile, so the first
-   thing seen after install matches the icon that was just tapped. */
-.signin__brand {
-  display: grid; place-items: center;
-  width: 84px; height: 84px; margin-inline: auto;
-  border-radius: 22.37%;                /* the iOS icon superellipse, approximated */
-  background: var(--accent);
-  color: var(--ink-on-accent);
-  box-shadow: var(--shadow);
-}
-.brandmark { display: block; width: auto; }
