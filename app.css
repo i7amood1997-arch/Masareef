@@ -757,6 +757,53 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 }
 .itemcard__amount .cur { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-medium); }
 
+/* --- a debt to savings, as one line ---------------------------------------- */
+/* An ongoing obligation, not an alarm: neutral surface, one line, the figure
+   beside its name, the one-tap action at the end. Tapping the line opens the
+   account. */
+.notice--line { align-items: center; padding: var(--s-2) var(--s-3); }
+.notice--line > .icon { margin-top: 0; color: var(--ink-muted); }
+.notice__main {
+  flex: 1; min-width: 0; min-height: var(--tap-min);
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--s-2);
+  padding: 0; border: 0; background: none; color: var(--ink);
+  font: inherit; text-align: start; cursor: pointer;
+}
+.notice__main b { font-weight: var(--weight-semi); }
+.notice__figure { color: var(--ink-muted); }
+.notice__figure .amount .cur { display: none; }
+.notice__main { align-content: center; }
+
+/* --- the ledger, denser ------------------------------------------------------ */
+/* ~80px rows showed four or five expenses a screen. Details stay on ONE line
+   (truncated, never wrapped) and the icon tile steps down, for ~60px rows and
+   still a full 44px+ target. */
+.row--ledger { min-height: 56px; padding-block: var(--s-2); gap: var(--s-3); }
+.row--ledger .row__icon { width: 32px; height: 32px; }
+.row--ledger .row__details {
+  display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.row--ledger .row__details > span + span { margin-inline-start: var(--s-2); }
+
+/* --- one savings account ----------------------------------------------------- */
+.vault__figure { display: flex; flex-direction: column; gap: var(--s-1); padding-block: var(--s-2) var(--s-4); }
+.vault__balance {
+  display: flex; align-items: center; gap: var(--s-2);
+  font-size: var(--text-2xl); font-weight: var(--weight-semi);
+  letter-spacing: var(--track-figure); font-variant-numeric: tabular-nums lining-nums;
+}
+.vault__balance .amount .cur { font-size: 0.4em; color: var(--ink-muted); font-weight: var(--weight-medium); }
+.vault__balance.is-negative { color: var(--negative); }
+.vault__move { gap: var(--s-2); }
+.vault__move .section__head h2 { margin: 0; }
+.vault__meaning {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 2px;
+  font-size: var(--text-sm); color: var(--ink-muted);
+}
+.vault__meaning b { color: var(--ink); font-weight: var(--weight-medium); }
+.vault__settings { justify-content: flex-start; gap: var(--s-5); padding-top: var(--s-2); }
+
 /* --- quantity ------------------------------------------------------------ */
 /* − · number · +, each a full 44px target. The number is isolated LTR so the
    digits never reorder against the Arabic around it. */
