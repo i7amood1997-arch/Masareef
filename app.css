@@ -918,6 +918,9 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .vaultform__row .textfield--amount { flex: 1; text-align: right; font-variant-numeric: tabular-nums lining-nums; font-weight: var(--weight-semi); }
 .vaultform__row .cur { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-medium); }
 .vaultform .inline-form .btn { flex: 1; }
+.vaultform__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.vaultform__actions .btn { white-space: nowrap; min-width: 0; }
+.vaultform__actions .btn--primary { grid-column: 1 / -1; }
 
 /* A settled fixed expense recedes rather than disappearing — you still want to
    see the whole month's commitments, just not be asked about them again. */
