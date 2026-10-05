@@ -757,6 +757,37 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 }
 .itemcard__amount .cur { font-size: var(--text-xs); color: var(--ink-muted); font-weight: var(--weight-medium); }
 
+/* --- quantity ------------------------------------------------------------ */
+/* − · number · +, each a full 44px target. The number is isolated LTR so the
+   digits never reorder against the Arabic around it. */
+.qty {
+  display: inline-flex; align-items: center; gap: var(--s-1);
+  align-self: flex-start;               /* hug its content inside a column .field */
+  padding: 2px; border: 1px solid var(--hairline); border-radius: var(--radius);
+  background: var(--surface-sunken);
+}
+.qty__btn { color: var(--ink); background: transparent; }
+.qty__btn:disabled { color: var(--ink-faint); }
+.qty__input {
+  width: 4ch; min-height: var(--tap-min); padding: 0;
+  border: 0; background: transparent; text-align: center;
+  font-variant-numeric: tabular-nums lining-nums; font-weight: var(--weight-semi);
+  unicode-bidi: isolate;
+}
+.itemcard__qty { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+.itemcard__qtylabel { font-size: var(--text-sm); color: var(--ink-muted); }
+.itemcard__unit { font-size: var(--text-sm); color: var(--ink-muted); }
+.itemcard__unit .amount .cur { display: none; }
+/* "×3" beside an item name in the ledger: present, but quieter than the name. */
+.row__qty {
+  /* Physical, not logical: the badge is dir=ltr (so "×3" cannot flip), which
+     makes its inline-START the left — the side away from the name. The gap
+     belongs on the right, between it and the Arabic name it follows. */
+  margin-right: var(--s-1);
+  font-weight: var(--weight-medium); color: var(--ink-muted);
+  font-variant-numeric: tabular-nums; unicode-bidi: isolate;
+}
+
 /* Pickers stay scrollable so a long category list never stretches the card. */
 .itemcard__pickers { display: flex; flex-direction: column; gap: var(--s-2); }
 .itemcard__pickers .segmented {
