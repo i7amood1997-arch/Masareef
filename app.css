@@ -804,6 +804,55 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .vault__meaning b { color: var(--ink); font-weight: var(--weight-medium); }
 .vault__settings { justify-content: flex-start; gap: var(--s-5); padding-top: var(--s-2); }
 
+/* --- the expense chat ------------------------------------------------------- */
+/* Own messages sit at the inline END — the left, in RTL — as in every Arabic
+   messaging app; answers sit at the start and run wider, because they carry
+   the figures. */
+.chat { display: flex; flex-direction: column; gap: var(--s-3); }
+.chat__msg {
+  max-width: 88%; display: flex; flex-direction: column; gap: var(--s-1);
+  padding: var(--s-3) var(--s-4); border-radius: var(--radius-lg);
+  line-height: var(--leading);
+}
+.chat__msg p { margin: 0; }
+.chat__msg--user {
+  align-self: flex-end; background: var(--accent-wash); color: var(--ink);
+  border-end-end-radius: var(--radius-sm);
+}
+.chat__msg--assistant {
+  align-self: flex-start; max-width: 100%;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-end-start-radius: var(--radius-sm);
+}
+.chat__item { padding-inline-start: var(--s-4); position: relative; }
+.chat__item::before { content: '•'; position: absolute; inset-inline-start: var(--s-1); color: var(--ink-muted); }
+.chat__msg .amount { font-weight: var(--weight-semi); }
+.chat__msg .amount .cur { font-size: 0.75em; color: var(--ink-muted); }
+.chat__note { font-size: var(--text-sm); color: var(--warning); }
+.chat__status { display: flex; align-items: center; gap: var(--s-2); margin: 0; font-size: var(--text-sm); color: var(--ink-muted); }
+.chat__dots { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: chat-pulse 1.1s var(--ease-out) infinite; }
+@keyframes chat-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .chat__dots { animation: none; } }
+.chat__empty { align-items: center; text-align: center; }
+.chat__suggestions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-2); margin-top: var(--s-2); }
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-1);
+  min-height: var(--tap-min); padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--hairline-strong); border-radius: 999px;
+  background: var(--surface); color: var(--ink);
+  font: inherit; font-size: var(--text-sm); text-align: start; cursor: pointer;
+}
+.chip:active { background: var(--hairline); }
+@media (hover: hover) and (pointer: fine) { .chip:hover { background: var(--surface-sunken); } }
+.chip--quiet { border-style: dashed; color: var(--accent); }
+.chat__composer { display: flex; align-items: flex-end; gap: var(--s-2); }
+.chat__input {
+  flex: 1; min-height: var(--tap-min); max-height: 140px; resize: none;
+  padding-block: var(--s-2); line-height: var(--leading);
+}
+.chat__send { flex: none; color: var(--accent); }
+.chat__send:disabled { color: var(--ink-faint); }
+
 /* --- quantity ------------------------------------------------------------ */
 /* − · number · +, each a full 44px target. The number is isolated LTR so the
    digits never reorder against the Arabic around it. */
