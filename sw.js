@@ -6,7 +6,7 @@
  *
  * iOS gives no Background Sync, so nothing here schedules work for later.
  */
-const CACHE = 'masareef-v3';
+const CACHE = 'masareef-v4';
 
 const CRITICAL = [
   './',
@@ -61,7 +61,12 @@ self.addEventListener('fetch', (e) => {
   // below still serves everything when there is no network at all.
   e.respondWith((async () => {
     try {
-      const res = await fetch(request);
+      // `no-cache`, not a plain fetch: GitHub Pages sends max-age=600, so a
+      // plain fetch could be answered by the BROWSER's HTTP cache — a fresh
+      // app.js beside a ten-minute-old app.css. That is how the chat screen
+      // appeared on the phone with none of its styles. `no-cache` always asks
+      // the server (a cheap 304 when nothing changed).
+      const res = await fetch(request, { cache: 'no-cache' });
       if (res.ok) (await caches.open(CACHE)).put(request, res.clone());
       return res;
     } catch {

@@ -273,6 +273,11 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
               color var(--dur-fast) var(--ease-out);
 }
 .choice .icon { color: var(--ink-muted); transition: color var(--dur-fast) var(--ease-out); }
+/* `hidden` must beat the display:flex above, or "first three rows" shows all. */
+.choice[hidden], .segmented__item[hidden] { display: none; }
+/* Opens the rest of the categories: quieter than a category, plainly a control. */
+.choice--more { border-style: dashed; color: var(--accent); }
+.choice--more .icon { color: var(--accent); }
 @media (hover: hover) and (pointer: fine) { .choice:hover:not(:disabled) { background: var(--surface-sunken); border-color: var(--hairline-strong); } }
 .choice:active:not(:disabled) { background: var(--hairline); }
 .choice[aria-pressed='true'],
@@ -803,24 +808,36 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 }
 .vault__meaning b { color: var(--ink); font-weight: var(--weight-medium); }
 .vault__settings { justify-content: flex-start; gap: var(--s-5); padding-top: var(--s-2); }
+.vault__delete { margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--hairline); }
+.vault__delete .field__hint { margin-top: var(--s-2); }
 
 /* --- the expense chat ------------------------------------------------------- */
-/* Own messages sit at the inline END — the left, in RTL — as in every Arabic
-   messaging app; answers sit at the start and run wider, because they carry
-   the figures. */
+/* Everything reads right-to-left: both bubbles hang from the RIGHT edge
+   (the inline start in RTL), the question as a short accent bubble and the
+   answer full width under it. The first version put questions on the left,
+   messenger-style, and the owner read that as the conversation running the
+   wrong way. */
+/* Reading room, not density: a long answer is read once, slowly, so it gets
+   taller lines, space between its sections (the model's blank lines) and
+   between list items, and a wider gap before each new question so every
+   question-and-answer pair reads as one unit. */
 .chat { display: flex; flex-direction: column; gap: var(--s-3); }
 .chat__msg {
-  max-width: 88%; display: flex; flex-direction: column; gap: var(--s-1);
+  max-width: 88%; display: flex; flex-direction: column; gap: var(--s-4);
   padding: var(--s-3) var(--s-4); border-radius: var(--radius-lg);
-  line-height: var(--leading);
+  line-height: 1.8;
 }
+.chat__msg--user + .chat__msg--assistant { margin-top: calc(-1 * var(--s-1)); }
+.chat__msg--assistant + .chat__msg--user { margin-top: var(--s-5); }
+.chat__section { display: flex; flex-direction: column; gap: var(--s-2); }
+.chat__msg, .chat__msg p { direction: rtl; text-align: start; }
 .chat__msg p { margin: 0; }
 .chat__msg--user {
-  align-self: flex-end; background: var(--accent-wash); color: var(--ink);
-  border-end-end-radius: var(--radius-sm);
+  align-self: flex-start; background: var(--accent-wash); color: var(--ink);
+  border-start-start-radius: var(--radius-sm);
 }
 .chat__msg--assistant {
-  align-self: flex-start; max-width: 100%;
+  align-self: stretch; max-width: 100%; padding: var(--s-4);
   background: var(--surface); border: 1px solid var(--hairline);
   border-end-start-radius: var(--radius-sm);
 }
@@ -1248,6 +1265,14 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 
 /* Review row: the tappable body and a separate confirm button, so accepting a
    suggestion never means opening the editor first. */
+/* Any row whose body is a button (edit on tap). Without this reset the native
+   button chrome showed through — a grey slab behind every expected expense. */
+.row__main {
+  display: flex; align-items: center; flex: 1; min-width: 0;
+  padding: 0; border: 0; background: none; color: inherit; font: inherit;
+  text-align: start; cursor: pointer;
+}
+.row__main:disabled { cursor: default; }
 .row--review { padding: 0; gap: 0; align-items: stretch; }
 .row--review .row__main {
   display: flex; align-items: center; gap: var(--s-3);
