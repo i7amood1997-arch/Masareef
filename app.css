@@ -1284,3 +1284,11 @@ input[type='date'].textfield::-webkit-calendar-picker-indicator {
 .row--review .btn--inline { flex: 0 0 auto; align-self: center; margin-inline-end: var(--s-3); }
 /* Marked as a proposal, not a fact. */
 .row__suggest { color: var(--accent); font-weight: var(--weight-medium); }
+
+/* --- settling with the payment that already arrived -------------------- */
+/* Above the new-payment field on the pay screens: the bank message usually
+   got there first, so linking it is the expected path, not the exception. */
+.paycands { margin-bottom: var(--s-5); }
+.paycands__title { margin: 0 0 var(--s-2); font-size: var(--text-base); font-weight: var(--weight-semi); }
+.dup { flex-wrap: wrap; }
+.dup__actions { display: flex; align-items: center; gap: var(--s-3); }
